@@ -8,6 +8,47 @@ from eralchemy import render_er
 
 Base = declarative_base()
 
+class User(Base):
+    __tablename__ = 'User'
+    id = Column(Integer, primary_key=True, unique=True)
+    username = Column(String(50), nullable=False)
+    firstname = Column(String(50),)
+    lastname = Column(String(50),)
+    email = Column(String(100), nullable=False)
+
+class Post(Base):
+    __tablename__ = 'Post'
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("User.id"))
+
+class Media(Base):
+    __tablename__ = 'Media'
+    id = Column(Integer, primary_key=True)
+    type = Column(String(50))
+    url = Column(String(250))
+    post_id = Column(Integer, ForeignKey("Post.id"))
+
+class Followers(Base):
+    __tablename__ = 'Followers'
+    id = Column(Integer, primary_key=True)
+    user_from_id = Column(Integer, ForeignKey("User.id"))
+    user_to_id = Column(Integer, ForeignKey("User.id"))
+
+class Comment(Base):
+    __tablename__ = 'Comment'
+    id = Column(Integer, primary_key=True)
+    comment_text = Column(String(250))
+    author_id = Column(Integer, ForeignKey("User.id"))
+    post_id = Column(Integer, ForeignKey("Post.id"))
+
+
+
+
+
+
+
+
+""" 
 class Person(Base):
     __tablename__ = 'person'
     # Here we define columns for the table person
@@ -24,10 +65,11 @@ class Address(Base):
     street_number = Column(String(250))
     post_code = Column(String(250), nullable=False)
     person_id = Column(Integer, ForeignKey('person.id'))
-    person = relationship(Person)
-
+    person = relationship(Person) 
+"""
+""" 
     def to_dict(self):
-        return {}
+        return {} """
 
 ## Draw from SQLAlchemy base
 try:
